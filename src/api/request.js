@@ -4,11 +4,11 @@ import axios from 'axios'
 import qs from 'qs'
 import { Message, MessageBox } from 'element-ui'
 import router from '@/router'
-import {removeToken} from '@/utils/myAuth'
+import { removeToken } from '@/utils/myAuth'
 // create an axios instance
 // axios.defaults.withCredentials = false;
 const service = axios.create({
-  withCredentials:false,
+  withCredentials: false,
   baseURL: process.env.BASE_API, // api的base_url
   timeout: 8000 // request timeout
 })
@@ -39,8 +39,8 @@ service.interceptors.response.use(
         type: 'error',
         duration: 5 * 1000
       })
-      removeToken();
-      router.replace({name:'login'})
+      removeToken()
+      router.replace({ name: 'login' })
       return Promise.reject('error')
     } else {
       return res
@@ -50,13 +50,14 @@ service.interceptors.response.use(
     console.log('err' + error) // for debug
     return Promise.reject(error)
   })
-function http(config){
-  if(config.method.toLowerCase() === 'post'){
-    config.data = qs.stringify(config.data,{arrayFormat: 'repeat',allowDots: true,allowDots: true});
-  }else{
-    config.params = config.data;
+
+function http(config) {
+  if (config.method.toLowerCase() === 'post') {
+    config.data = qs.stringify(config.data, { arrayFormat: 'repeat', allowDots: true, allowDots: true })
+  } else {
+    config.params = config.data
   }
-  return service(config);
+  return service(config)
 }
 
-export default http;
+export default http
